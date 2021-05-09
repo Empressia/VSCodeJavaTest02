@@ -1,0 +1,32 @@
+plugins {
+	id "java";
+}
+ext.moduleName = "jp.empressia.vscode_java_test_02";
+ext.junitVersion = "5.7.0";
+ext.hamcrestVersion = "2.2";
+
+repositories {
+	jcenter();
+}
+
+dependencies {
+	// use JUnit test framework.
+	testImplementation(group:"org.junit.jupiter", name:"junit-jupiter-api", version:junitVersion);
+	testRuntimeOnly(group:"org.junit.jupiter", name:"junit-jupiter-engine", version:junitVersion);
+	testImplementation(group:"org.hamcrest", name:"hamcrest", version:hamcrestVersion);
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding "UTF-8";
+	options.compilerArgs << "-parameters";
+}
+
+java {
+	modularity.inferModulePath = true;
+	withJavadocJar();
+	withSourcesJar();
+}
+
+test {
+	useJUnitPlatform();
+}
